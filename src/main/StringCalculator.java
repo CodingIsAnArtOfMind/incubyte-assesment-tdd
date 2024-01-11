@@ -2,6 +2,8 @@ package main;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class StringCalculator {
@@ -9,13 +11,25 @@ public class StringCalculator {
         if(numbers.isEmpty()){
             return 0;
         }
-        else if (numbers.contains(",")) {
-            String[] numToken = numbers.split("[,\n]");
+        else {
+            String[] numToken = getCustomDelimeterString(numbers);
             List<Integer> numList = Arrays.stream(numToken).map(StringCalculator::getAllInteger).toList();
             return numList.stream().mapToInt(Integer::intValue).sum();
         }
-        return Integer.parseInt(numbers);
     }
+
+    private static String[] getCustomDelimeterString(String numbers) {
+        if (numbers.startsWith("//")) {
+            Pattern pattern= Pattern.compile("//(.)\n(.*)");
+            Matcher matcher = pattern.matcher(numbers);
+            matcher.matches();
+            String deliCustom = matcher.group(1);
+            numbers = matcher.group(2);
+            return numbers.split(deliCustom);
+        }
+        return numbers.split("[,\n]");
+    }
+
     private static int getAllInteger(String num) {
         return Integer.parseInt(num);
     }
