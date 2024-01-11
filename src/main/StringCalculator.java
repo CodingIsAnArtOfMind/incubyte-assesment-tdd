@@ -2,7 +2,7 @@ package main;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class StringCalculator {
     public static int add(String numbers) {
@@ -10,7 +10,7 @@ public class StringCalculator {
             return 0;
         }
         else if (numbers.contains(",")) {
-            String[] numToken = numbers.split(",");
+            String[] numToken = numbers.split("[,\n]");
             List<Integer> numList = Arrays.stream(numToken).map(StringCalculator::getAllInteger).toList();
             return numList.stream().mapToInt(Integer::intValue).sum();
         }
