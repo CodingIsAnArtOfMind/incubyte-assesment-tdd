@@ -30,5 +30,9 @@ public class StringCalculatorTest {
     public void shouldAcceptCustomDelimiterInput() {
         assertEquals(3, StringCalculator.add("//;\n1;2"));
     }
+    @Test
+    public void shouldAcceptCustomDelimiterAlsoRegExpSpecialChar() {
+        assertEquals(3, StringCalculator.add("//.\n1.2"));
+    }
 
 }

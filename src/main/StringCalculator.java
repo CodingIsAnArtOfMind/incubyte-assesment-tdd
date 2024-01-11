@@ -20,12 +20,12 @@ public class StringCalculator {
 
     private static String[] getCustomDelimeterString(String numbers) {
         if (numbers.startsWith("//")) {
-            Pattern pattern= Pattern.compile("//(.)\n(.*)");
+            Pattern pattern= Pattern.compile("//(.*)\n(.*)");
             Matcher matcher = pattern.matcher(numbers);
             matcher.matches();
             String deliCustom = matcher.group(1);
             numbers = matcher.group(2);
-            return numbers.split(deliCustom);
+            return numbers.split(Pattern.quote(deliCustom));
         }
         return numbers.split("[,\n]");
     }
