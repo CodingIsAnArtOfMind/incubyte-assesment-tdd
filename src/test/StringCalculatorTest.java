@@ -38,5 +38,12 @@ public class StringCalculatorTest {
     public void shouldThrowExceptionForNegativeNumbers() {
         assertThrows(RuntimeException.class, () -> StringCalculator.add("-1"));
     }
-
+    @Test
+    public void exceptionMessageShouldContainNegativeNumbers() {
+        try {
+            StringCalculator.add("-1,-2,-3");
+        } catch (RuntimeException e) {
+            assertEquals("Negatives not allowed: -1, -2, -3", e.getMessage());
+        }
+    }
 }

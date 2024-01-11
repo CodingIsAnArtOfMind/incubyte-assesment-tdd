@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 public class StringCalculator {
@@ -14,8 +15,11 @@ public class StringCalculator {
         else {
             String[] numToken = getCustomDelimeterString(numbers);
             List<Integer> numList = Arrays.stream(numToken).map(StringCalculator::getAllInteger).toList();
-            if (numList.stream().anyMatch(i -> i < 0)) {
-                throw new RuntimeException("negatives not allowed");
+
+            List<Integer> negativeNumList = numList.stream().filter(i -> i < 0).toList();
+            if (!negativeNumList.isEmpty()) {
+                List<String> numbersStr = negativeNumList.stream().map(Object::toString).collect(Collectors.toList());
+                throw new RuntimeException("Negatives not allowed: " + String.join(", ", numbersStr));
             }
             return numList.stream().mapToInt(Integer::intValue).sum();
         }
