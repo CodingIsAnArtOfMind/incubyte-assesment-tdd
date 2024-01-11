@@ -1,5 +1,9 @@
 package main;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class StringCalculator {
     public static int add(String numbers) {
         if(numbers.isEmpty()){
@@ -7,8 +11,12 @@ public class StringCalculator {
         }
         else if (numbers.contains(",")) {
             String[] numToken = numbers.split(",");
-            return Integer.parseInt(numToken[0]) + Integer.parseInt(numToken[1]);
+            List<Integer> numList = Arrays.stream(numToken).map(StringCalculator::getAllInteger).toList();
+            return numList.stream().mapToInt(Integer::intValue).sum();
         }
         return Integer.parseInt(numbers);
+    }
+    private static int getAllInteger(String num) {
+        return Integer.parseInt(num);
     }
 }

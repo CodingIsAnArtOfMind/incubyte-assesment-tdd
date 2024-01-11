@@ -18,4 +18,8 @@ public class StringCalculatorTest {
     public void shouldReturnSumOnTwoNumberDelimiterByComma() {
         assertEquals(3, StringCalculator.add("1,2"));
     }
+    @Test
+    public void shouldReturnSumForMultipleNumbers() {
+        assertEquals(10, StringCalculator.add("1,2,3,4"));
+    }
 }
