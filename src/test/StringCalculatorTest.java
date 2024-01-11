@@ -3,7 +3,7 @@ package test;
 import main.StringCalculator;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StringCalculatorTest {
     @Test
@@ -33,6 +33,10 @@ public class StringCalculatorTest {
     @Test
     public void shouldAcceptCustomDelimiterAlsoRegExpSpecialChar() {
         assertEquals(3, StringCalculator.add("//.\n1.2"));
+    }
+    @Test
+    public void shouldThrowExceptionForNegativeNumbers() {
+        assertThrows(RuntimeException.class, () -> StringCalculator.add("-1"));
     }
 
 }

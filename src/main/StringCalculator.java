@@ -14,6 +14,9 @@ public class StringCalculator {
         else {
             String[] numToken = getCustomDelimeterString(numbers);
             List<Integer> numList = Arrays.stream(numToken).map(StringCalculator::getAllInteger).toList();
+            if (numList.stream().anyMatch(i -> i < 0)) {
+                throw new RuntimeException("negatives not allowed");
+            }
             return numList.stream().mapToInt(Integer::intValue).sum();
         }
     }
