@@ -15,18 +15,21 @@ public class StringCalculator {
         else {
             String[] numToken = getCustomDelimeterString(numbers);
             List<Integer> numList = Arrays.stream(numToken).map(StringCalculator::getAllInteger).toList();
-
-            List<Integer> negativeNumList = numList.stream().filter(i -> i < 0).toList();
-            if (!negativeNumList.isEmpty()) {
-                List<String> numbersStr = negativeNumList.stream().map(Object::toString).collect(Collectors.toList());
-                throw new RuntimeException("Negatives not allowed: " + String.join(", ", numbersStr));
-            }
+            validateNegativeNumbers(numList);
             return numList.stream().mapToInt(Integer::intValue).sum();
         }
     }
 
+    private static void validateNegativeNumbers(List<Integer> numList) {
+        List<Integer> negativeNumList = numList.stream().filter(i -> i < 0).toList();
+        if (!negativeNumList.isEmpty()) {
+            throw new RuntimeException("Negatives not allowed: " +
+                    negativeNumList.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        }
+    }
+
     private static String[] getCustomDelimeterString(String numbers) {
-        if (numbers.startsWith("//")) {
+        if (isStartWith(numbers)) {
             Pattern pattern= Pattern.compile("//(.*)\n(.*)");
             Matcher matcher = pattern.matcher(numbers);
             matcher.matches();
@@ -35,6 +38,10 @@ public class StringCalculator {
             return numbers.split(Pattern.quote(deliCustom));
         }
         return numbers.split("[,\n]");
+    }
+
+    private static boolean isStartWith(String numbers) {
+        return numbers.startsWith("//");
     }
 
     private static int getAllInteger(String num) {
